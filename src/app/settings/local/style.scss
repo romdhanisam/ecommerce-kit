@@ -1,0 +1,15 @@
+@import 'modules/variables';
+
+.app-settings {
+  display: flex;
+  flex-flow: column wrap;
+  gap: $baseline-grid;
+}
+
+.settings-item {
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+

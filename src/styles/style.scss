@@ -1,0 +1,233 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+
+/* =============
+ * FRAMEWORKS *
+============== */
+
+@use 'sass:map';
+@use 'sass:color';
+@use '@angular/material';
+@use '@angular/material' as mat;
+
+/* ==========
+ * MODULES *
+=========== */
+
+@import 'modules/mixins/_font-face';
+@import 'modules/mixins/_manage-user-select';
+@import 'modules/mixins/_media-queries-indicator';
+@import 'modules/mixins/_normalize';
+@import 'modules/mixins/_responsive';
+@import 'modules/mixins/_selection';
+
+/* ===========
+ * PARTIALS *
+============ */
+
+@import 'partials/_typography';
+@import 'partials/_elements';
+@import 'partials/_layout';
+
+/* ========
+ * VIEWS *
+========= */
+
+@import 'views/_home';
+
+// Whether duplication warnings should be disabled. Warnings enabled by default.
+mat.$theme-ignore-duplication-warnings: true;
+
+// Common styles for Angular Material
+@import 'modules/_variables';
+@import 'modules/_functions';
+@include mat.core;
+
+// The following mixins include base theme styles that are only needed once per application. These
+// theme styles do not depend on the color, typography, or density settings in your theme. However,
+// these styles may differ depending on the theme's design system. Currently all themes use the
+// Material 2 design system, but in the future it may be possible to create theme based on other
+// design systems, such as Material 3.
+//
+// Please note: you do not need to include the 'base' mixins, if you include the corresponding
+// 'theme' mixin elsewhere in your Sass. The full 'theme' mixins already include the base styles.
+//
+// To learn more about "base" theme styles visit our theming guide:
+// https://material.angular.io/guide/theming#theming-dimensions
+
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$ecommerce-kit-primary: mat.m2-define-palette(mat.$m2-indigo-palette, 500);
+$ecommerce-kit-accent: mat.m2-define-palette(mat.$m2-light-blue-palette);
+
+// The warn palette is optional (defaults to red).
+$ecommerce-kit-warn: mat.m2-define-palette(mat.$m2-red-palette);
+$ecommerce-kit-success: mat.m2-define-palette(mat.$m2-green-palette);
+
+
+@mixin ecommerce-kit-theme($theme, $colors) {
+  $foreground-palette: map.get($theme, foreground);
+  $background-palette: map.get($theme, background);
+  $background: map.get($background-palette, background);
+  $card-background: map.get($background-palette, card);
+  $card-foreground: map.get($foreground-palette, card);
+  $muted: map.get($foreground-palette, secondary-text);
+  $muted: map.get($foreground-palette, secondary-text);
+  $muted-light: map.get($foreground-palette, disabled);
+
+  .spacer {
+    flex: 1 1 auto;
+    justify-content: space-between;
+  }
+
+  .app-toolbar-success {
+    background-color: color.adjust(map.get($colors, indicator-success), $lightness: 20%);
+  }
+
+  .app-toolbar-warning {
+    background-color: color.adjust(map.get($colors, indicator-warning), $lightness: 10%);
+  }
+
+  .app-muted {
+    color: $muted;
+  }
+
+  .app-muted-light {
+    color: $muted-light;
+  }
+
+  .notify-viewport {
+    height: 300px;
+    width: 450px;
+    border: 2px solid map.get($foreground-palette, secondary-text);
+    background-color: $background;
+  }
+
+  mat-sidenav-container {
+    height: calc(100vh - 65px);
+  }
+
+  mat-sidenav {
+    width: $baseline-grid * 30;
+    border-right: none;
+    border-radius: $baseline-grid;
+    padding: $baseline-grid * 2;
+    text-align: center;
+    height: 100vh;
+  }
+
+  .mat-mdc-nav-list .mat-mdc-list-item {
+    border: 1.5mm solid $card-background;
+    min-height: $baseline-grid * 6.5;
+  }
+
+  .app-nav-item-active {
+    border: 1.5mm;
+  }
+}
+
+$colors-light: (
+  primary: $ecommerce-kit-primary,
+  accent: $ecommerce-kit-accent,
+  warn: $ecommerce-kit-warn,
+  indicator-success: #008000,
+  indicator-warning: #ffad20
+);
+$colors-dark: (
+  primary: $ecommerce-kit-primary,
+  accent: mat.m2-define-palette(mat.$m2-blue-grey-palette),
+  indicator-success: #008000,
+  indicator-warning: #ffad20
+);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+// light theme
+
+$ecommerce-kit-light-theme: mat.m2-define-light-theme((
+  color: $colors-light,
+));
+
+// dark theme
+$ecommerce-kit-dark-theme: mat.m2-define-dark-theme((
+  color: $colors-dark
+));
+@include mat.all-component-bases($ecommerce-kit-light-theme);
+
+// Apply theme by default
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+
+.ecommerce-kit-dark-theme {
+  @include mat.core-theme($ecommerce-kit-dark-theme);
+  @include mat.all-component-colors($ecommerce-kit-dark-theme);
+  @include mat.sidenav-theme($ecommerce-kit-dark-theme);
+  @include ecommerce-kit-theme($ecommerce-kit-dark-theme, $colors-dark);
+}
+
+.ecommerce-kit-light-theme {
+  @include mat.core-theme($ecommerce-kit-light-theme);
+  @include mat.all-component-colors($ecommerce-kit-light-theme);
+  @include mat.sidenav-theme($ecommerce-kit-light-theme);
+  @include ecommerce-kit-theme($ecommerce-kit-light-theme, $colors-light);
+}
+
+
+// Angular Material 15/16 Density
+ @include mat.form-field-density(-4);
+//@include mat.icon-button-density(-1);
+
+
+/**
+ * Sass Project Structure.
+ * See: http://thesassway.com/beginner/how-to-structure-a-sass-project
+ *
+ * The MODULES directory is reserved for Sass code that doesn't cause Sass to
+ * actually output CSS, things like (mixin declarations, functions, variables,
+ * placeholder selectors).
+ *
+ * The PARTIALS directory is where the meat of my CSS is constructed.
+ * Break stylesheets into (header, content, sidebar, and footer components and
+ * a few others), or break into much finer categories (typography, buttons,
+ * textboxes, selectboxes, etc…).
+ *
+ * The VIEWS directory is where page specific styles are constructed and
+ * partials (if needed) are adapted to their container.
+ *
+ * FOLDER STRUCTURE:
+ *
+ * styles/
+ * |
+ * |-- fonts/                # custom fonts source files.
+ * |   ...
+ * |
+ * |-- modules/              # Modules
+ * |   |-- _variables.scss   # Global Variables
+ * |   |-- _functions.scss   # Global Functions
+ * |   |-- mixins/           # Most used mixins
+ *         ...
+ * |   ...
+ * |
+ * |-- partials/             # Partials
+ * |   |-- _typography.scss  # Tipography settings and declarations
+ * |   |-- _elements.scss    # Set of commons elements
+ * |   |-- _layout.scss      # Global parts of the layout
+ * |   ...
+ * |
+ * |-- views/                # Views
+ * |   |-- _home.scss        # page/view specific stylesheet
+ * |   ...
+ * |
+ * `-- main.style.scss            # primary Sass file
+ *
+ */
+
+
+// Basic Settings.
+@include normalize-all;
+@include manage-user-select;
+@include selection($white, $black);

@@ -1,0 +1,6 @@
+@import 'modules/_variables';
+
+.app-debug-toolbar {
+  height: $baseline-grid;
+  min-height: 5 * $baseline-grid;
+}

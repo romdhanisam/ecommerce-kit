@@ -1,0 +1,40 @@
+<mat-toolbar>
+    <ng-container *ngIf="screenWidth$.asObservable() | async as width">
+        <button mat-icon-button id="nav-button" (click)="width > 640 ? sidenav.toggle(): toggle()">
+            <mat-icon>menu</mat-icon>
+        </button>
+    </ng-container>
+    <span class="app-name">E.commerce kit</span>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="changeTheme()">
+        <mat-icon>{{ themeControl.value === 'Dark' ? 'wb_sunny' : 'nights_stay' }}</mat-icon>
+    </button>
+</mat-toolbar>
+<mat-toolbar *ngIf="!isProdMode" class="app-debug-toolbar" [ngClass]="getDebugClass()">
+    <mat-toolbar-row/>
+</mat-toolbar>
+<mat-sidenav-container >
+    <mat-sidenav class="mat-elevation-z2" [mode]="mode" [opened]="openSidenav" (openedStart)="openedStart()">
+        <app-nav-item/>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+              <router-outlet />
+            </div>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+<footer>
+    <mat-toolbar>
+        <mat-toolbar-row>
+            <p> &copy; <a href="https://github.com/romdhanisam/ecommerce-kit" target="_blank">E.commerce-kit</a> 2025</p>
+            <span class="spacer"></span>
+            <p> Crafted with ❤️</p>
+        </mat-toolbar-row>
+    </mat-toolbar>
+</footer>
+
+
+
+

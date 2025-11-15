@@ -1,0 +1,32 @@
+site_name: E.commerce-kit Docs
+site_url: "https://romdhanisam.github.io/ecommerce-kit/"
+repo_url: "https://github.com/romdhanisam/ecommerce-kit"
+repo_name: "romdhanisam/ecommerce-kit"
+site_dir: public
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - content.code.annotate
+    - content.tabs.link
+nav:
+  - Welcome to E.commerce-kit: index.md
+
+markdown_extensions:
+  - admonition
+  - def_list
+  - attr_list
+  - footnotes
+  - pymdownx.highlight:
+      anchor_linenums: true
+      linenums: true
+      linenums_style: pymdownx.inline
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - md_in_html
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format

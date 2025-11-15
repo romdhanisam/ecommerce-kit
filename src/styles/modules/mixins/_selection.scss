@@ -1,0 +1,7 @@
+// Selection style
+@mixin selection($text-color, $background-color) {
+  ::selection {
+    color: $text-color;
+    background-color: $background-color;
+  }
+}
